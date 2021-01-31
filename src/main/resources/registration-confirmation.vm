@@ -1,0 +1,12 @@
+<html>  
+    <body>  
+        <div>Hello,</div>
+        <div>>you are receiving this email because you have been invited to <a href="${appPath}">Reports app</a>.</div>  
+        <br>
+        <div>  
+             <a href="${appPath}/#!/registration-confirmation?email=${userEmail}&token=${userToken}">Click here to set a new password</a>  
+        </div>
+        <br>
+        <div>Greetings</div>
+    </body>  
+</html>  

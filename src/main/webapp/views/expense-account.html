@@ -1,0 +1,134 @@
+<div>
+	<h4 class="text-center">
+		Expense Account <span data-ng-if="showAdminReport"
+			data-ng-bind="detailedReportName()"></span>
+	</h4>
+	<div data-ng-include="'views/month-selector.html'"
+		data-ng-show="!showAdminReport"></div>
+
+	<div data-loading="loading" class="m-4">
+		<!-- Expense Account -->
+		<div class="row">
+			<div class="overflow-y-auto mb-5 w-100">
+				<table class="table table-sm text-center m-0">
+					<thead class="thead-light">
+						<tr>
+							<th class="width-auto no-wrap">Day</th>
+							<th>Customer</th>
+							<th>Place</th>
+							<th>Description</th>
+							<th class="expense-account-max-width-col">KM</th>
+							<th class="width-auto no-wrap">Daily Refund</th>
+							<th class="width-auto no-wrap">Transportation</th>
+							<th class="width-auto no-wrap">Accomodation</th>
+							<th class="expense-account-max-width-col">Meals</th>
+							<th class="expense-account-max-width-col">Other</th>
+							<th>Total</th>
+							<th class="width-auto no-wrap"
+								data-ng-if="!showAdminReport && !reportLocked">Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="row in expenseAccount.rows">
+							<td class="width-auto no-wrap p-0 border-0"><select
+								data-ng-model="row.day" class="w-100 fix-select-height"
+								data-ng-options="index * 1 + 1 as index * 1 + 1 for (index, day) in getDaysForCurrentMonth()"
+								data-ng-disabled="reportLocked"></select></td>
+							<td class="p-0 border-0"><input type="text"
+								data-ng-model="row.customer" class="p-0 w-100"
+								data-ng-disabled="reportLocked"></td>
+							<td class="p-0 border-0"><input type="text"
+								data-ng-model="row.place" class="p-0 w-100"
+								data-ng-disabled="reportLocked"></td>
+							<td class="p-0 border-0"><input type="text"
+								data-ng-model="row.description" class="p-0 w-100"
+								data-ng-disabled="reportLocked"></td>
+							<td class="expense-account-max-width-col p-0 border-0"><input
+								type="text" data-ng-model="row.km" class=" p-0 w-100"
+								data-ng-disabled="reportLocked"
+								data-autonumeric="{currencySymbol : ' km'}"></td>
+							<td class="width-auto no-wrap p-0 border-0"><input
+								type="text" data-ng-model="row.dailyRefund" class=" p-0 w-100"
+								data-ng-disabled="reportLocked" data-autonumeric></td>
+							<td class="width-auto no-wrap p-0 border-0"><input
+								type="text" data-ng-model="row.transportation"
+								class=" p-0 w-100" data-ng-disabled="reportLocked"
+								data-autonumeric></td>
+							<td class="width-auto no-wrap p-0 border-0"><input
+								type="text" data-ng-model="row.accomodation" class=" p-0 w-100"
+								data-ng-disabled="reportLocked" data-autonumeric></td>
+							<td class="expense-account-max-width-col p-0 border-0"><input
+								type="text" data-ng-model="row.meals" class="p-0 w-100"
+								data-ng-disabled="reportLocked" data-autonumeric></td>
+							<td class="expense-account-max-width-col p-0 border-0"><input
+								type="text" data-ng-model="row.other" class="p-0 w-100"
+								data-ng-disabled="reportLocked" data-autonumeric></td>
+							<td class="p-0 border-0"
+								data-ng-bind="partialTotal(row) | currency"></td>
+							<td class="width-auto no-wrap p-0 border-0 pointer"
+								data-ng-if="!showAdminReport && !reportLocked"
+								data-ng-click="deleteRow(row)" data-ng-disabled="reportLocked"><i
+								class="fa fa-trash" aria-hidden="true"></i></td>
+						</tr>
+						<tr data-ng-if="expenseAccount.rows.length === 0">
+							<td colspan="12">No elements available.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-6 pr-5">
+				<table class="h5 table text-center">
+					<tr>
+						<td>Total KM:</td>
+						<td data-ng-bind="totalKm(expenseAccount) | number : 2" class="h3"></td>
+					</tr>
+					<tr>
+						<td>KM fare applied:</td>
+						<td data-ng-bind="expenseAccount.fare | currency : '&euro;/km'"
+							class="h3"></td>
+					</tr>
+					<tr>
+						<td>Total refunded KM:</td>
+						<td data-ng-bind="totalKmFare(expenseAccount) | currency" class="h3"></td>
+					</tr>
+					<tr>
+						<td>Total:</td>
+						<td
+							data-ng-bind="total(expenseAccount) + totalKmRefund | currency"
+							class="h3"></td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="col-6 p-0">
+				<div class="input-group my-2 mx-0">
+					<div class="input-group-prepend">
+						<div class="input-group-text">
+							<i class="fa fa-2x fa-sticky-note-o" aria-hidden="true"></i>
+						</div>
+					</div>
+					<textarea id="notes" rows="5" data-ng-model="expenseAccount.notes"
+						data-ng-disabled="reportLocked" class="form-control"
+						placeholder="Notes..."></textarea>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Save Messages -->
+		<div data-auto-dismiss-alert></div>
+
+		<!-- Buttons -->
+		<div class="row" data-ng-if="!showAdminReport && !reportLocked">
+			<div class="text-right col-12">
+				<button class="btn btn-dark" type="button" data-ng-click="addRow()">Add row</button>
+				<button data-ng-click="saveExpenseAccount()" class="btn btn-danger"
+					data-ng-disabled="reportLocked">Save</button>
+			</div>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,80 @@
+<div data-ng-controller="adminUserListController as modalReference">
+
+	<h4 class="text-center">Employee List</h4>
+	<div data-loading="loading" class="m-4">
+		<!-- Reports Drill down -->
+		<div class="row">
+			<div class="overflow-y-auto mb-2 w-100 text-center">
+				<table class="table table-sm table-hover table-bordered m-0 p-0">
+					<thead class="thead-light">
+						<tr>
+							<th colspan="2">Edit</th>
+							<th><input type="text" placeholder="Employee"
+								data-ng-model="userFilter.employee" class="w-100"></th>
+							<th><input type="text" placeholder="Customer"
+								data-ng-model="userFilter.orders.customer" class="w-100"></th>
+							<th>Da</th>
+							<th>A</th>
+						</tr>
+					</thead>
+					<tbody
+						data-ng-repeat="user in users | filter : userFilter | orderBy : orderField as filteredUsers">
+						<tr>
+							<td rowspan="{{user.orders.length}}" class="p-0 align-middle border-0">
+									<i class="fa fa-plus fa-lg pointer" data-ng-click="addRow(user)" title="Aggiungi commessa" aria-hidden="true"></i>
+							</td>
+							<td rowspan="{{user.orders.length}}" class="p-0 align-middle border-0">
+									<i class="fa fa-save fa-lg pointer" aria-hidden="true" data-ng-click="updateUserOrders(user)" title="Salva modifiche"></i>
+							</td>
+							<td rowspan="{{user.orders.length}}" class="p-0 align-middle"
+								data-ng-bind="user.employee"></td>
+							<td class="p-0"><input type="text"
+								data-ng-model="user.orders[0].customer"
+								class="text-center p-0 border-0 w-100 fix-input-height-size"></td>
+							<td class="p-0"><input type="date"
+								data-ng-model="user.orders[0].from"
+								class="text-center p-0 border-0 w-100 fix-input-height-size">
+							</td>
+							<td class="p-0"><input type="date"
+								data-ng-model="user.orders[0].to"
+								class="text-center p-0 border-0 w-100 fix-input-height-size">
+							</td>
+						</tr>
+						<!-- Only for multiple customers -->
+						<tr data-ng-if="user.orders.length > 1 && !$first"
+							data-ng-repeat="order in user.orders">
+							<td class="p-0"><input type="text"
+								data-ng-model="order.customer"
+								class="text-center p-0 border-0 w-100 fix-input-height-size"></td>
+							<td class="p-0"><input type="date"
+								data-ng-model="order.from"
+								class="text-center p-0 border-0 w-100 fix-input-height-size">
+							</td>
+							<td class="p-0"><input type="date" data-ng-model="order.to"
+								class="text-center p-0 border-0 w-100 fix-input-height-size">
+							</td>
+						</tr>
+					</tbody>
+					<tbody data-ng-if="!filteredUsers.length">
+						<tr>
+							<td colspan="6">No reports found with the selected filters.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<!-- Save Messages -->
+		<div data-auto-dismiss-alert></div>
+
+		<!-- Buttons -->
+		<div class="row">
+			<div class="text-right col-12">
+				<button class="btn btn-danger" data-toggle="modal" data-target="#admin-add-employee-modal" 
+					role="button">Add employee</button>
+			</div>
+		</div>
+	</div>
+
+	<div data-ng-include="'views/admin-add-employee-modal.html'"></div>
+</div>

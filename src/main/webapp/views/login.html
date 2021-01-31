@@ -1,0 +1,50 @@
+<div data-ng-controller="loginController"
+	class="d-flex vertical-center-container-fluid justify-content-center">
+	<div class="card w-35 login-card">
+		<div class="card-header">
+			<img class="logo-small" src="img/logo-no-name.png" alt="Logo">
+			&nbsp;
+			<h4 class="d-inline align-middle">Login</h4>
+		</div>
+
+		<form name="loginForm" class="p-3" data-ng-submit="doLogin()"
+			novalidate>
+
+			<!-- Email -->
+			<div class="row input-group my-2 mx-0">
+				<div class="input-group-prepend">
+					<div class="input-group-text">
+						<i class="fa fa-envelope fa-fw"></i>
+					</div>
+				</div>
+				<input type="email" class="form-control" name="email" placeholder="Email"
+					data-ng-model="email" required>
+			</div>
+
+			<!-- Password -->
+			<div class="row input-group my-2 mx-0">
+				<div class="input-group-prepend">
+					<div class="input-group-text">
+						<i class="fa fa-lock fa-fw"></i>
+					</div>
+				</div>
+				<input type="password" class="form-control" name="password" placeholder="Password"
+					data-ng-model="password" required>
+			</div>
+
+			<!-- Messages -->
+			<div class="row alert mx-1" role="alert" data-ng-class="loginError ? 'alert-danger' : 'alert-success'"  data-ng-if="message">
+				<span data-ng-bind="message"></span><span
+					data-ng-show="showPasswordRecovery()">Forgotten password?
+					<a href="" data-ng-click="sendRecoverPasswordEmail()" class="alert-link">Click here to reset.</a>
+				</span>
+			</div>
+
+			<!-- Submit -->
+			<div class="clearfix float-right">
+				<input type="submit" class="btn btn-danger"
+					data-ng-disabled="loginForm.$invalid" value="Login">
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,104 @@
+<div>
+	<h4 class="text-center">
+		Report <span data-ng-if="showAdminReport"
+			data-ng-bind="detailedReportName()"></span>
+	</h4>
+
+	<div data-ng-include="'views/month-selector.html'"
+		data-ng-show="!showAdminReport"></div>
+
+	<div data-loading="loading" class="m-4">
+		<!-- Timesheet -->
+		<div class="row">
+			<div class="overflow-y-auto mb-2">
+				<table class="table table-sm table-hover table-bordered m-0">
+					<thead class="thead-light text-center">
+						<tr>
+							<th class="width-auto" rowspan="2"></th>
+							<th
+								data-ng-repeat="dayNumber in getDaysForCurrentMonth() track by $index"
+								class="timesheet-fixed-col font-weight-bold"
+								data-ng-bind="$index + 1"
+								data-ng-class="{'text-danger': isHoliday($index)}"></th>
+						</tr>
+						<tr>
+							<th
+								data-ng-repeat="dayName in getDaysForCurrentMonth() track by $index"
+								class="timesheet-fixed-col font-weight-bold"
+								data-ng-bind="dayName"
+								data-ng-class="{'text-danger' : isHoliday($index)}"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="row in timesheet.rows">
+							<th scope="row" data-ng-bind="formatRowName(row)"
+								class="p-0 width-auto text-nowrap"></th>
+							<td data-ng-repeat="hour in row.hours track by $index"
+								class="p-0" data-disable-holiday><input type="number"
+								data-ng-model="hour.value"
+								class="border-0 w-100 text-center table-gray-disable" min="0"
+								data-ng-class="isColumnValid($index) ?  'table-light' : 'table-danger'"
+								data-ng-disabled="isHoliday($index, row.name) || reportLocked"
+								data-limit-to-max data-hide-zero /></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-6 p-0">
+				<div class="input-group my-2 mx-0">
+					<div class="input-group-prepend">
+						<div class="input-group-text">
+							<i class="fa fa-2x fa-sticky-note-o" aria-hidden="true"></i>
+						</div>
+					</div>
+					<textarea id="notes" rows="5" data-ng-model="timesheet.notes"
+						data-ng-disabled="reportLocked" class="form-control"
+						placeholder="Notes, medical certificate..."></textarea>
+				</div>
+			</div>
+
+			<div class="col-6 text-right p-0"
+				data-ng-if="!showAdminReport && !reportLocked">
+
+				<!-- Bottom table buttons -->
+				<div class="btn-group m-1"
+					data-ng-if="timesheetNotContainsAnyRow(['Marriage', 'Death', 'Other'])">
+					<button class="btn btn-dark dropdown-toggle" type="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add
+						row</button>
+					<div class="dropdown-menu">
+						<h6 class="dropdown-header">Add row</h6>
+						<a class="dropdown-item"
+							data-ng-click="addRowToTimesheet('Marriage')"
+							data-ng-if="timesheetNotContainsAnyRow(['Marriage'])">Marriage</a>
+						<a class="dropdown-item"
+							data-ng-click="addRowToTimesheet('Death')"
+							data-ng-if="timesheetNotContainsAnyRow(['Death'])">Death</a> <a
+							class="dropdown-item" data-ng-click="addRowToTimesheet('Other')"
+							data-ng-if="timesheetNotContainsAnyRow(['Altro'])">Other</a>
+					</div>
+				</div>
+
+				<!-- Buttons -->
+				<button data-ng-click="saveTimesheet()" class="btn btn-danger"
+					data-ng-disabled="columnsInError.join('') > 0">Save</button>
+
+			</div>
+
+		</div>
+
+		<!-- Error messages -->
+		<div class="row alert alert-danger" role="alert"
+			data-ng-bind="errorMessage"
+			data-ng-show="columnsInError.join('') > 0"></div>
+
+		<!-- Save Messages -->
+		<div data-auto-dismiss-alert></div>
+
+	</div>
+
+</div>

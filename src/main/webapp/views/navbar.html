@@ -1,0 +1,29 @@
+<nav
+	class="navbar navbar-dark bg-dark navbar-expand-md navbar-collapse-sm"
+	data-ng-controller="navbarController" >
+	<!-- Logo -->
+	<div class="navbar-header col-12 col-sm-2 text-center">
+		<img alt="Logo" src="img/logo.png" class="logo">
+	</div>
+
+	<!-- Menu buttons -->
+	<div class="col-12 col-sm-10 text-center text-sm-right" data-ng-if="showToolbar()">
+	
+	<a data-ng-click="redirectWithQuery('/admin-user-list')" data-ng-if="showAdminToolbar()"><i class="fa fa-users fa-2x fa-fw pointer top-icon-link" data-ng-class="{'top-icon-link-active' : isPage('/admin-user-list')}"
+		aria-hidden="true" title="User list"></i></a>
+	
+	<a data-ng-click="redirectWithQuery('/admin-report-summary')" data-ng-if="showAdminToolbar()"><i class="fa fa-list fa-2x fa-fw pointer top-icon-link" data-ng-class="{'top-icon-link-active' : isPage('/admin-report-summary')}"
+		aria-hidden="true" title="Reports drill down"></i></a>
+		
+	<a data-ng-click="redirectWithQuery('/timesheet')" data-ng-if="showUserToolbar()"><i class="fa fa-calendar fa-2x fa-fw pointer top-icon-link" data-ng-class="{'top-icon-link-active' : isPage('/timesheet')}"
+		aria-hidden="true" title="Report"></i></a>
+		 
+	<a data-ng-click="redirectWithQuery('/expense-account')" data-ng-if="showUserToolbar()"><i class="fa fa-euro fa-2x fa-fw pointer top-icon-link" aria-hidden="true"
+		 title="Expense Account" data-ng-class="{'top-icon-link-active' : isPage('/expense-account')}" ></i></a>
+		
+	<span data-toggle="modal" data-target="#model-logout" role="button"> <i
+		class="fa fa-sign-out fa-2x fa-fw pointer top-icon-link" title="Logout"></i></span>
+		
+	</div>
+	<div data-ng-include="'views/logout-modal.html'"></div>
+</nav>

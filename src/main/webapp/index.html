@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="styles/style.css">
+<link rel="stylesheet" href="styles/lib/font-awesome.min.css">
+<link rel="stylesheet" href="styles/lib/bootstrap-4.1.3.min.css">
+
+<script type="text/javascript" src="scripts/lib/md5.min.js"></script>
+<script type="text/javascript" src="scripts/lib/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autonumeric@4.1.0"></script>
+<script type="text/javascript" src="scripts/lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="scripts/lib/angular-1.6.5.min.js"></script>
+<script type="text/javascript" src="scripts/lib/angular-locale-1.3.14.js"></script>
+<script type="text/javascript" src="scripts/lib/bootstrap.bundle-4.1.3.min.js"></script>
+<script type="text/javascript"
+	src="scripts/lib/angular-animate-1.7.2.min.js"></script>
+<script type="text/javascript"
+	src="scripts/lib/angular-route-1.6.9.min.js"></script>
+<script type="text/javascript"
+	src="scripts/lib/angular-cookies-1.6.5.min.js"></script>
+<script type="text/javascript" src="scripts/holidays.js"></script>
+<script type="text/javascript" src="scripts/app.js"></script>
+<script type="text/javascript" src="scripts/service.js"></script>
+<script type="text/javascript" src="scripts/controller.js"></script>
+<script type="text/javascript" src="scripts/directive.js"></script>
+
+<!-- Favicon -->
+<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+<title>Reports</title>
+
+</head>
+
+<body data-ng-app="reports" data-ng-controller="reportsController">
+	<div data-ng-include="'views/navbar.html'"></div>
+	<div data-ng-view class="container-fluid text-dark p-1 viewport-height"></div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:b="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<http auto-config="true" entry-point-ref="entryPoint">
+		<intercept-url pattern="/rest/login" access="permitAll" />
+		<intercept-url pattern="/rest/user/sendRecoverPasswordEmail" access="permitAll" />
+		<intercept-url pattern="/rest/user/passwordRecovery" access="permitAll" />
+		
+		<intercept-url pattern="/rest/report/getReportsSummary" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/rest/report/lockReports" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/rest/report/getUserReportForAdmin" access="hasRole('ROLE_ADMIN')" />
+
+		<!-- Defaults -->
+		<intercept-url pattern="/rest/report/**" access="isAuthenticated()" />
+		<intercept-url pattern="/rest/user/**" access="isAuthenticated()" />
+		<intercept-url pattern="/rest/**" access="hasRole('ROLE_ADMIN')" />
+
+		<form-login login-processing-url="/rest/login"
+			authentication-success-handler-ref="authSuccessHandler"
+			authentication-failure-handler-ref="authFailureHandler" />
+		<!-- TODO: riabilita cross-forgery -->
+		<csrf disabled="true" />
+		<logout logout-url="/rest/logout" />
+
+		<!-- <remember-me services-ref="rememberMeHandler" /> -->
+	</http>
+
+	<authentication-manager>
+		<authentication-provider ref="authenticationProvider" />
+	</authentication-manager>
+
+	<b:bean id="authSuccessHandler" class="co.aurasphere.reports.security.AuthSuccessHandler" />
+	<b:bean id="authFailureHandler" class="co.aurasphere.reports.security.AuthFailureHandler" />
+	<b:bean id="authenticationProvider"
+		class="co.aurasphere.reports.security.CustomAuthenticationProvider" />
+	<b:bean id="entryPoint"
+		class="co.aurasphere.reports.security.RestAuthenticationEntryPoint" />
+	<!-- <b:bean id="rememberMeHandler" class="co.aurasphere.reports.security.RememberMeHandler"> 
+		<b:constructor-arg name="key" index="0" value="QejivQuPDt6lWHvhwC0q" /> <b:constructor-arg 
+		name="userDetailsService" index="1" ref="userDaoImpl" /> </b:bean> -->
+
+	<!-- Encryptor for password authentication -->
+	<b:bean id="passwordEncryptor" class="org.jasypt.util.password.BasicPasswordEncryptor" />
+
+	<!-- Server secret for token generation -->
+	<b:bean id="serverSecret" class="java.lang.String">
+		<b:constructor-arg value="serverSecret" />
+	</b:bean>
+
+</b:beans>

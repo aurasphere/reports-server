@@ -1,0 +1,67 @@
+<div data-ng-controller="adminReportSummaryController as adminReportSummary">
+
+	<h4 class="text-center">Reports drill-down</h4>
+	
+	<div data-ng-include="'views/month-selector.html'"></div>
+
+	<div data-loading="loading" class="m-4" >
+		<!-- Reports Drill-down -->
+		<div class="row">
+			<div class="overflow-y-auto mb-2 w-100 text-center">
+				<table
+					class="table table-sm table-hover table-bordered m-0">
+					<thead class="thead-light">
+						<tr>
+							<th><input type="text" placeholder="Employee" data-ng-model="summaryFilter.summary.employee" class="w-100"></th>
+							<th><input type="text" placeholder="Customer" data-ng-model="summaryFilter.summary.customer" class="w-100"></th>
+							<th>Worked</th>
+							<th>Overtime</th>
+							<th>Holiday</th>
+							<th>Leaves</th>
+							<th>Lock <input id="lockAllReportsCheckbox" type="checkbox" data-ng-model="adminReportSummary.lockAllReports" data-ng-click="toggleAllReports()"></th>
+ 							<th>Details</th>
+ 						</tr>
+					</thead>
+					<tbody data-ng-repeat="report in reports | filter : summaryFilter | orderBy : orderField as filteredReports">
+						<tr>
+							<td rowspan="{{getRowSpanForReportSummary(report.summary)}}" class="p-0 align-middle" data-ng-bind="report.summary.employee"></td>
+							<td class="p-0">
+								<span data-ng-if="report.summary.workedDetails.length == 1" data-ng-bind="report.summary.workedDetails[0].customer"></span>
+								<span data-ng-if="report.summary.workedDetails.length > 1" class="font-weight-bold">Total</span>
+							</td>
+							<td class="p-0" data-ng-bind="report.summary.worked"></td>
+							<td class="p-0" data-ng-bind="report.summary.overtime"></td>
+							<td rowspan="{{getRowSpanForReportSummary(report.summary)}}" class="p-0 align-middle" data-ng-bind="report.summary.vacation"></td>
+							<td rowspan="{{getRowSpanForReportSummary(report.summary)}}" class="p-0 align-middle" data-ng-bind="report.summary.leave"></td>
+							<td rowspan="{{getRowSpanForReportSummary(report.summary)}}" class="p-0 align-middle"><input type="checkbox" data-ng-model="report.locked" data-ng-click="updateLockAllReportsCheckbox()"></td>
+							<td rowspan="{{getRowSpanForReportSummary(report.summary)}}" class="p-0 pointer align-middle" data-ng-click="showReportDetails(report)"><i class="fa fa-info-circle" aria-hidden="true"></i></td>
+						</tr>
+						<!-- Only for multiple customers -->
+						<tr data-ng-if="report.summary.workedDetails.length > 1 && !first" data-ng-repeat="customer in report.summary.workedDetails">
+							<td class="p-0" data-ng-bind="customer.customer"></td>
+							<td class="p-0" data-ng-bind="customer.total"></td>
+							<td class="p-0" data-ng-bind="report.summary.overtimeDetails[$index].total"></td>
+						</tr>
+					</tbody>
+					 <tbody data-ng-if="!filteredReports.length">
+						<tr>
+							<td colspan="8">No report found with the selected filters.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<!-- Save Messages -->
+		<div data-auto-dismiss-alert></div>
+
+		<!-- Buttons -->
+		<div class="row">
+			<div class="text-right col-12">
+				<a target="_self" data-ng-href="{{printReports()}}" class="btn btn-dark" download="Reports.xls">Print</a>
+				<button data-ng-click="updateLocks()" class="btn btn-danger" >Update locks</button>
+			</div>
+		</div>
+	</div>
+
+</div>

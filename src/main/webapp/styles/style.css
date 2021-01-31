@@ -1,0 +1,141 @@
+/* Navbar styles */
+
+.top-icon-link {
+	color: #6c757d;
+}
+
+.top-icon-link:hover, .top-icon-link-active {
+	color: white;
+}
+
+.logo {
+	height: 45px;
+}
+
+.navbar {
+	margin-bottom: 1%;
+	min-height: 9vh;
+}
+
+/* End of navbar styles */
+
+/* Login styles */
+.logo-small {
+	width: 10%;
+	height: 10%;
+}
+
+.vertical-center-container-fluid {
+	min-height: 100%;
+	min-height: 80vh;
+	display: flex;
+	align-items: center;
+}
+
+.login-card {
+	min-width: 800px;
+}
+/* End of login styles*/
+
+/* Utilities styles */
+.w-35 {
+	width: 35% !important;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.viewport-height {
+	height: 87vh;
+}
+
+/* Hides the number spinner (e.g. input type="number") */
+input[type='number'] {
+	-moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
+/* Changes the selection color to red */
+::selection {
+  background: #ffb7b7; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #ffb7b7; /* Gecko Browsers */
+}
+
+.loading {
+	color: #dd3333;
+	font-size: 36px !important;
+	justify-content: center;
+	margin-left: 50%;
+	margin-top: 15%;
+}
+
+/* End of utilities styles*/
+
+/* Month selector styles */
+
+.margin-auto {
+	margin: auto !important;
+}
+
+/* End of month selector styles */
+
+/* Timesheet styles */
+.timesheet-fixed-col {
+	width: 30px;
+	min-width: 30px;
+}
+
+.caption-top {
+	caption-side: top;
+}
+
+.overflow-y-auto {
+	overflow-y: auto;
+}
+
+.table-gray-disable:disabled {
+	background-color: rgb(235, 235, 228) !important;
+}
+
+.width-auto {
+	width: 1px;
+}
+/* End of timesheet styles */
+
+/* Expense account styles */
+
+.expense-account-max-width-col {
+	width: 100px;
+	max-width: 100px;
+}
+
+.fix-select-height {
+	height: 28px;
+}
+
+/* End of expense account styles */
+
+/* Animations */
+
+.fade-out-animation.ng-leave {
+  transition:0.5s linear all;
+  opacity:1;
+}
+.fade-out-animation.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+/* End of animations */
+
+/* Admin user list styles */
+
+.fix-input-height-size {
+	height: 30px;
+}
+
+/* End of admin user list styles */

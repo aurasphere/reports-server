@@ -1,0 +1,27 @@
+<div class="row margin-auto" data-ng-controller="monthSelectorController">
+	<div id="month-slider" class="carousel slide col-8"
+		data-ride="carousel">
+		<div class="carousel-inner text-center">
+			<div class="carousel-item"
+				data-ng-class="{active: $index === reportMonth}"
+				data-ng-init="$last && initCarousel()"
+				data-ng-repeat="month in months">
+				<div class="d-block w-100 h4" data-ng-bind="month"></div>
+			</div>
+		</div>
+		<a class="carousel-control-prev" href="#month-slider" role="button"
+			data-slide="prev" target="_self" data-ng-click="monthChangedStart()">
+			<i class="fa fa-angle-left fa-2x text-dark" aria-hidden="true"></i> <span
+			class="sr-only">Previous</span>
+		</a> <a class="carousel-control-next" href="#month-slider" role="button"
+			data-slide="next" target="_self" data-ng-click="monthChangedStart()">
+			<i class="fa fa-angle-right fa-2x text-dark" aria-hidden="true"></i>
+			<span class="sr-only">Next</span>
+		</a>
+	</div>
+
+	<!-- Year -->
+	<div class="align-middle col-4 text-center">
+		<span data-ng-bind="reportYear" class="h4"></span>
+	</div>
+</div>

@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+   http://www.springframework.org/schema/data/mongo 
+   http://www.springframework.org/schema/data/mongo/spring-mongo-1.2.xsd
+   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<mongo:mapping-converter>
+		<mongo:custom-converters>
+			<mongo:converter ref="yearMonthDbObjectConverter" />
+		</mongo:custom-converters>
+	</mongo:mapping-converter>
+
+	<mongo:repositories base-package="co.aurasphere.dao"
+		mongo-template-ref="mongoTemplate" />
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+		<constructor-arg name="mongoConverter" ref="mappingConverter" />
+	</bean>
+
+	<!-- Spring profiles. Use -Dspring.profiles.active as ENV/JVM variable to 
+		activate one. By default development database is used as a safety measure. -->
+	<!-- Production environment configuration -->
+	<beans profile="PRO">
+		<mongo:db-factory host="dbHost" port="13053"
+			dbname="dbName" username="dbUser" password="dbPassword"
+			write-concern="SAFE" />
+	</beans>
+
+	<!-- Development environment configuration -->
+	<beans profile="DEV, default">
+		<mongo:db-factory host="localhost" port="27017"
+			dbname="dbName" username="dbUser" password="dbPassword" write-concern="SAFE" />
+	</beans>
+
+</beans>

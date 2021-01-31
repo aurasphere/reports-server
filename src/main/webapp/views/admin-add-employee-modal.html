@@ -1,0 +1,102 @@
+<div class="container-fluid">
+	<div class="modal fade" id="admin-add-employee-modal" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Add employee</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						data-ng-click="resetData()" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form name="addEmployeeForm">
+					<div class="modal-body justify-content-center align-items-center d-flex" data-loading="modalReference.loading">
+						<div class="row">
+							<!--Name-->
+							<div class="input-group my-2 mx-0 col-md-12">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-address-card" aria-hidden="true"></i>
+									</div>
+								</div>
+								<input type="text" class="form-control" placeholder="Name"
+									data-ng-model="modalReference.newEmployeeName" required>
+								<input type="text" class="form-control" placeholder="Surname"
+									data-ng-model="modalReference.newEmployeeLastName" required>
+							</div>
+						</div>
+
+						<!--Email-->
+						<div class="row input-group my-2 mx-0">
+							<div class="input-group-prepend">
+								<div class="input-group-text">
+									<i class="fa fa-envelope fa-fw"></i>
+								</div>
+							</div>
+							<input type="email" class="form-control" placeholder="Email"
+								data-ng-model="modalReference.newEmployeeEmail" required>
+						</div>
+
+						<div class="row">
+							<!-- Refund type -->
+							<div class="row input-group my-2 mx-0 col-md-6">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-eur fa-fw" aria-hidden="true"></i>
+									</div>
+								</div>
+								<input id="newEmployeeRefund" type="text" min="0"
+									class="form-control" placeholder="Refund"
+									data-ng-model="modalReference.newEmployeeRefund" required
+									data-autonumeric>
+							</div>
+
+							<div
+								class="btn-group btn-group-toggle row input-group my-2 mx-0 col-md-6 justify-content-end"
+								data-toggle="group">
+								<label class="btn"
+									data-ng-class="modalReference.newEmployeeRefundType == 'DAILY' ? 'btn-danger' : 'btn-secondary'">
+									<input type="radio" name="newEmployeeRefundType" value="DAILY"
+									data-ng-model="modalReference.newEmployeeRefundType">
+									Daily
+								</label> <label class="btn"
+									data-ng-class="modalReference.newEmployeeRefundType == 'MONTHLY' ? 'btn-danger' : 'btn-secondary'">
+									<input type="radio" name="newEmployeeRefundType"
+									value="MONTHLY" data-ng-model="modalReference.newEmployeeRefundType" checked>
+									Monthly
+								</label>
+							</div>
+
+						</div>
+						<div class="row input-group my-2 mx-0">
+							<div class="input-group-prepend">
+								<div class="input-group-text">
+									<i class="fa fa-car" aria-hidden="true"></i>
+								</div>
+							</div>
+							<input id="newEmployeeFare" type="text" class="form-control"
+								placeholder="Rate"
+								data-ng-model="modalReference.newEmployeeFare" required
+								data-autonumeric="{currencySymbol : '&euro;/km'}">
+						</div>
+
+						<!-- Save Messages -->
+						<div class="row alert m-0 fade-out-animation"
+							data-ng-class="modalReference.error ? 'alert-danger' : 'alert-success'"
+							role="alert" data-ng-if="modalReference.showModalAlert" data-ng-bind="modalReference.message"></div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="submit" 
+							class="btn btn-danger"
+							data-ng-disabled="addEmployeeForm.$invalid || modalReference.addButtonLocked"
+							data-ng-click="addEmployee()">Add</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal" data-ng-click="resetEmployeeModalData()">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
